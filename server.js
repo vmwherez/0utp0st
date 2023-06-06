@@ -11,7 +11,7 @@ app.post('/create-checkout-session', async (req, res) => {
     line_items: [
       {
         // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-        price: '{{PRICE_ID}}',
+        price: 'price_1NG99LL81vsh2XmhjpRIeC9D',
         quantity: 1,
       },
     ],
@@ -24,4 +24,4 @@ app.post('/create-checkout-session', async (req, res) => {
   res.redirect(303, session.url);
 });
 
-app.listen(4242, () => console.log('Running on port 80'));
+app.listen(80, () => console.log('Running on port 80'));
