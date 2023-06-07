@@ -10,4 +10,26 @@
   <body>
     <a href="checkout.html">BUY TICKET</a>
   </body>
+  <script type="module">
+    const queryAPI = async (url) => {
+      console.log("queryAPI");
+      console.log(url);
+      const resp = await fetch(url, {
+        method: "GET",
+        mode: "cors",
+        // headers: { "Content-type": "application/json" },
+      });
+      return resp.json();
+    };
+
+    const handleEvent = async () => {
+      const results = await queryAPI(
+        "https://printify-service.wilderzone.workers.dev/"
+      );
+
+      console.log(results);
+    };
+
+    handleEvent();
+  </script>
 </html>
