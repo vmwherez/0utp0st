@@ -1,26 +1,125 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
 body {
-  display: flex;
+  font: 1em monospace;
+  background-color: #fcfcfc;
   justify-content: center;
   align-items: center;
-  background: black;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-  'Helvetica Neue', 'Ubuntu', sans-serif;
-  height: 100vh;
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 4em;
+}
+
+#app {
+  margin-top: 7em;
+}
+
+#left {
+  position: fixed;
+  left: 7em;
+  top: 8%;
+  max-width: 600px;
+  max-height: 900px;
+  display: none;
+  background-color: rgba(249, 245, 243, 1);
+  z-index: 1000;
+  padding: 1em;
+}
+
+/* #right {
+  position: fixed;
+  right: 0;
+float: right;
+  max-width: 600px;
+  height: 900px;
+  background-color: rgba(0, 0, 0, 0.09);
+display: none;
+} */
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font: 1em monospace;
+  z-index: 1000;
+  width: 100%;
+  color: #1c1c1c;
+  padding: 1em;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(152, 159, 161, 0.2);
+}
+
+.footer a {
+  float: right;
+  margin-right: 2em;
+}
+
 section {
   background: #ffffff;
   display: flex;
   flex-direction: column;
-  width: 400px;
-  height: 112px;
-  border-radius: 6px;
+  max-width: 500px;
+  margin: 0 auto;
+  margin-top: 2em;
   justify-content: space-between;
+} 
+
+
+
+.checkout-image {
+   display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 300px;
+   margin: 0 auto;
+    padding-top: 3em;
+    box-shadow: 0px 1px 0.5px 0px rgba(0, 0, 0, 0.03);  
 }
+
+
+
+
+
+
+
+hr {
+  color: #fcfcfc
+}
+
+/* #app {
+  display: flex;
+  flex-direction: row-reverse;
+  padding-top: 2em;
+  padding-left: 2em;
+  flex-wrap: wrap-reverse;
+  margin-top: 3em;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 6px;
+}*/
+  
+
 .product {
   display: flex;
+  margin: 0 auto;
+  padding: 1em;
+  margin-top: 2em;
 }
 .description {
   display: flex;
@@ -30,51 +129,127 @@ section {
 p {
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: -0.154px;
-  color: #242d60;
+  color: #888888;
   height: 100%;
   width: 100%;
-  padding: 0 20px;
+  padding: 1em;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
 }
-img {
-  border-radius: 6px;
-  margin: 10px;
-  width: 54px;
-  height: 57px;
+
+
+a {
+  color: #fcfcfc;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.154px;
+  font: 1em monospace;
 }
-h3,
+
+
+
+h1 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24pt;
+  line-height: 20px;
+  letter-spacing: -0.154px;
+  margin: 0;}
+
+h3 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 8pt;
+  line-height: 20px;
+  letter-spacing: -0.154px;
+  color: #1c1c1c;
+  margin: 0;
+}
 h5 {
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
   letter-spacing: -0.154px;
-  color: #242d60;
+  color: #888888b0;
   margin: 0;
 }
 h5 {
   opacity: 0.5;
 }
 button {
+  align-items: center;
+  min-width: 120px;
+  margin: .5em auto;
+  font: 1em monospace;
   height: 36px;
-  background: #556cd6;
+  background: black;
   color: white;
-  width: 100%;
   font-size: 14px;
   border: 0;
   font-weight: 500;
   cursor: pointer;
-  letter-spacing: 0.6;
-  border-radius: 0 0 6px 6px;
   transition: all 0.2s ease;
-  box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
 }
+
+
 button:hover {
-  opacity: 0.8;
+  background-color: grey;
 }
+
+
+
+
+form {margin: 0 auto;}
+
+.myGallery {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.myGallery img {
+  width: 100%;
+}
+
+/*
+  And here are some declarations for the image caption.
+  Just hover over one of the last 5 images to see it.
+*/
+
+.myGallery .item {
+  position: relative;
+  overflow: hidden;
+}
+
+.myGallery .item img {
+  vertical-align: middle;
+}
+
+.myGallery .caption {
+  margin: 0;
+  padding: 1em;
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+  transition: transform 0.5s;
+  transform: translateY(5%);
+  background: rgba(0, 0, 0, 0.7);
+  color: rgb(255, 255, 255);
+}
+
+.myGallery .item:hover .caption {
+  transform: translateY(0%);
+}
+
+/*
+  The rest is only styling for this example page
+*/

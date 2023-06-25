@@ -6,20 +6,50 @@
     <script src="https://js.stripe.com/v3/"></script>
   </head>
   <body>
+      
     <section>
+      <img id="product" alt="product" class="checkout-image" />
       <div class="product">
-        <img
-          src="https://i.imgur.com/EHyR2nP.png"
-          alt="The cover of Stubborn Attachments"
-        />
         <div class="description">
           <h3>Use Card Number 4242424242...</h3>
           <h5>$1</h5>
+        <p id="description">This is a product description</p>
         </div>
       </div>
       <form action="/create-checkout-session" method="POST">
-        <button type="submit" id="checkout-button">Checkout</button>
+        <button type="submit" id="checkout-button">Checkout</button>  
       </form>
+<button id="back">Back</button>
     </section>
+
+
+    
   </body>
+  <script>
+    
+    console.log(window.location.href);
+    // console.log url params
+    const urlParams = new URLSearchParams(window.location.search);
+    console.log(urlParams);
+    // console.log url params
+    const myParam = urlParams.get("data");
+    console.log(myParam);
+    const myParam3 = urlParams.get("price");
+    console.log(myParam3);
+    const image_url = urlParams.get("image");
+    
+    
+    document.getElementById("product").src = image_url;
+    const myParam5 = urlParams.get("description");
+    document.getElementById("description").innerHTML = myParam5;
+    console.log(myParam5);
+    // const myParam6 = urlParams.get("url");
+    // console.log(myParam6);
+
+    document.getElementById("back").onclick = function (e) {
+      window.location.href = "/";
+    };
+
+    
+  </script>
 </html>
