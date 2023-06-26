@@ -23,7 +23,6 @@ redis.get("key", function (err, result) {
 });
 
 // fetch cloudflare worker
-const fetch = require("node-fetch");
 
 const queryAPI = async (url) => {
   console.log("queryAPI");
