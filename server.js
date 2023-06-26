@@ -5,11 +5,28 @@ const stripe = require("stripe")(
 const express = require("express");
 const app = express();
 app.use(express.static("public"));
-const Redis = require("ioredis");
+const Redis = require("ioredis-rejson");
+
+const redis = new Redis({
+  host: "localhost",
+  port: 6379,
+});
+
+// const om = require("redis-om");
+
+// /* pulls the Redis URL from .env */
+// const url = process.env.REDIS_URL;
+
+// /* create and open the Redis OM Client */
+// const client = async () => {
+//   await new om.Client().open(url);
+// };
+
+// client().then((client) => {});
 
 // Connect to your internal Redis instance using the REDIS_URL environment variable
 // The REDIS_URL is set to the internal Redis URL e.g. redis://red-343245ndffg023:6379
-const redis = new Redis(process.env.REDIS_URL);
+// const redis = new Redis(process.env.REDIS_URL);
 
 // Set and retrieve some values
 redis.set("key", "ioredis");
@@ -22,7 +39,36 @@ redis.get("key", function (err, result) {
   }
 });
 
-// fetch cloudflare worker
+const main = async () => {
+  // ReJSON Methods
+  const res = await redis.json_set("JSONKEY", ".", { foo: "bar" }, "NX");
+  const res2 = await redis.json_get("JSONKEY");
+
+  console.log(res); // OK
+  console.log(res2); // { foo: "bar"}
+
+  // IORedis Methods
+  const res3 = await redis.set("KEY", "VALUE");
+  const res4 = await redis.get("KEY");
+
+  console.log(res3); // OK
+  console.log(res4); // "VALUE"
+};
+
+main();
+
+app.get("/api", (req, res) => {
+  redis.get("products", function (err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      // console.log(result);
+      // res.json({ message: "Hello from server.js" });
+
+      res.json({ message: result.JSON });
+    }
+  });
+});
 
 const queryAPI = async (url) => {
   console.log("queryAPI");
@@ -34,6 +80,17 @@ const queryAPI = async (url) => {
   });
   return resp.json();
 };
+
+const loadProducts = async () => {
+  const results = await queryAPI(
+    "https://printify-service.wilderzone.workers.dev/"
+  );
+
+  // console.log("products", results);
+  redis.set("products", JSON.stringify(results));
+};
+
+loadProducts();
 
 const YOUR_DOMAIN = "http://localhost:80";
 
@@ -70,18 +127,26 @@ app.get("/hook", (req, res) => {
 });
 
 app.get("/products", async (req, res) => {
-  const products = await stripe.products.list();
+  // const products = await stripe.products.list();
   // check if products are in redis
-  console.log("products", products);
-  const productsInRedis = await redis.get("products");
-  if (productsInRedis) {
-    console.log("products in redis");
-    res.send(JSON.parse(productsInRedis));
-  } else {
-    console.log("products not in redis");
-    redis.set("products", JSON.stringify(products));
-    res.send(products);
-  }
+  console.log("products!");
+  await redis.get("products", function (err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(result);
+
+      if (result) {
+        console.log("products in redis");
+        res.send(JSON.parse(result));
+      } else {
+        console.log("products not in redis");
+        loadProducts();
+        res.send("products not in redis");
+        //  res.send(products);
+      }
+    }
+  });
 });
 
 app.listen(80, () => console.log("Running on port 80"));

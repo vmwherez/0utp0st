@@ -75,14 +75,14 @@
       const resp = await fetch(url, {
         method: "GET",
         mode: "cors",
-        // headers: { "Content-type": "application/json" },
+        headers: { "Content-type": "application/json" },
       });
-      console.log(resp)
+      // console.log(resp)
       console.log(resp.json());
       return resp.json();
     };
 
-      queryRedis("/products");
+      queryRedis("/api");
 
     const queryAPI = async (url) => {
       console.log("queryAPI");
