@@ -7,10 +7,7 @@ const app = express();
 app.use(express.static("public"));
 const Redis = require("ioredis-rejson");
 
-const redis = new Redis({
-  host: "localhost",
-  port: 6379,
-});
+const redis = new Redis(process.env.REDIS_URL);
 
 // const om = require("redis-om");
 
