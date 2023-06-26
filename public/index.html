@@ -69,8 +69,6 @@
   </body>
   <script type="module">
 
-    queryRedis("/products");
-
     const queryRedis = async (url) => {
       console.log("queryRedis");
       console.log(url);
@@ -82,6 +80,9 @@
       console.log(resp.json());
       return resp.json();
     };
+
+
+      queryRedis("/products");
 
     const queryAPI = async (url) => {
       console.log("queryAPI");
