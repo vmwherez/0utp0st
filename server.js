@@ -5,6 +5,22 @@ const stripe = require("stripe")(
 const express = require("express");
 const app = express();
 app.use(express.static("public"));
+import Redis from "ioredis";
+
+// Connect to your internal Redis instance using the REDIS_URL environment variable
+// The REDIS_URL is set to the internal Redis URL e.g. redis://red-343245ndffg023:6379
+const redis = new Redis(process.env.REDIS_URL);
+
+// Set and retrieve some values
+redis.set("key", "ioredis");
+
+redis.get("key", function (err, result) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(result);
+  }
+});
 
 const YOUR_DOMAIN = "http://localhost:80";
 
