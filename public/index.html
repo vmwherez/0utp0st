@@ -68,7 +68,20 @@
 </div> 
   </body>
   <script type="module">
-  
+
+    queryRedis("/products");
+
+    const queryRedis = async (url) => {
+      console.log("queryRedis");
+      console.log(url);
+      const resp = await fetch(url, {
+        method: "GET",
+        mode: "cors",
+        // headers: { "Content-type": "application/json" },
+      });
+      console.log(resp.json());
+      return resp.json();
+    };
 
     const queryAPI = async (url) => {
       console.log("queryAPI");

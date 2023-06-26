@@ -22,6 +22,20 @@ redis.get("key", function (err, result) {
   }
 });
 
+// fetch cloudflare worker
+const fetch = require("node-fetch");
+
+const queryAPI = async (url) => {
+  console.log("queryAPI");
+  console.log(url);
+  const resp = await fetch(url, {
+    method: "GET",
+    mode: "cors",
+    // headers: { "Content-type": "application/json" },
+  });
+  return resp.json();
+};
+
 const YOUR_DOMAIN = "http://localhost:80";
 
 app.post("/create-checkout-session", async (req, res) => {
@@ -54,6 +68,19 @@ app.get("/hook", (req, res) => {
   const params = req.query;
   console.log(event, params);
   res.send();
+});
+
+app.get("/products", async (req, res) => {
+  const products = await stripe.products.list();
+  // check if products are in redis
+  const productsInRedis = await redis.get("products");
+  if (productsInRedis) {
+    console.log("products in redis");
+    res.send(JSON.parse(productsInRedis));
+  } else {
+    redis.set("products", JSON.stringify(products));
+    res.send(products);
+  }
 });
 
 app.listen(80, () => console.log("Running on port 80"));
