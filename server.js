@@ -72,11 +72,13 @@ app.get("/hook", (req, res) => {
 app.get("/products", async (req, res) => {
   const products = await stripe.products.list();
   // check if products are in redis
+  console.log("products", products);
   const productsInRedis = await redis.get("products");
   if (productsInRedis) {
     console.log("products in redis");
     res.send(JSON.parse(productsInRedis));
   } else {
+    console.log("products not in redis");
     redis.set("products", JSON.stringify(products));
     res.send(products);
   }
