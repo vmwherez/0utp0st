@@ -9,66 +9,47 @@
   </head>
   <body>
     <div class="header">
-<h1 id="title">0UTP0ST</h1>
-</div>
-   
-<div id="left" class="myGallery">
-  <h2>about</h2>
-  <p></p>
-  <p>0utp0st 0utp0st0utp0st0utp0st0utp0st0utp0st0utp0st 0utp0st
-    0utp0st0utp0st0utp0st0utp0st0utp0st0utp0st 0utp0st0utp0st0utp0st0utp0st
-    0utp0st0utp0st0utp0st
-  </p>
-</div>
+      <h1 id="title">0UTP0ST</h1>
+    </div>
 
-<div class="container">
-  
-<div id="app" class="myGallery">
+    <div id="left" class="myGallery">
+      <h2>about</h2>
+      <p></p>
+      <p>
+        0utp0st 0utp0st0utp0st0utp0st0utp0st0utp0st0utp0st 0utp0st
+        0utp0st0utp0st0utp0st0utp0st0utp0st0utp0st 0utp0st0utp0st0utp0st0utp0st
+        0utp0st0utp0st0utp0st
+      </p>
+    </div>
 
-      <div class="item">
-        <h2>the world you remember</h2>
-        <p>doesn't exist anymore</p>
+    <div class="container">
+      <div id="app" class="myGallery">
+        <div class="item">
+          <h2>the world you remember</h2>
+          <p>doesn't exist anymore</p>
+        </div>
+        <div class="item">
+          <p>the world you remember</p>
+          <span class="caption">doesn't exist anymore</span>
+        </div>
+        <div class="item">
+          <img
+            src="https://www.zdcardtech.com/UploadFiles/201682620151324.jpg"
+          />
+        </div>
+        <div class="item">
+          <img
+            src="https://t4.ftcdn.net/jpg/01/85/24/45/360_F_185244514_mW46R8doAxChavmI8OgBsBajK4dbxUyZ.jpg"
+          />
+        </div>
       </div>
-          <div class="item">
-            <p>the world you remember</p>
-            <span class="caption">doesn't exist anymore</span>
-          </div>
-          <div class="item">
-<img src="https://www.zdcardtech.com/UploadFiles/201682620151324.jpg"></div>
-<div class="item"><img src="https://t4.ftcdn.net/jpg/01/85/24/45/360_F_185244514_mW46R8doAxChavmI8OgBsBajK4dbxUyZ.jpg"></div>
+    </div>
 
-  <!-- <div class="item">
-    <img src="https://picsum.photos/190/190?11" />
-    <span class="caption">This is an image caption for image 11</span>
-  </div>
-  <div class="item">
-    <img src="https://picsum.photos/190/190?12" />
-    <span class="caption">This is an image caption for image 12</span>
-  </div>
-  <div class="item">
-    <img src="https://picsum.photos/190/190?13" />
-    <span class="caption">This is an image caption for image 13</span>
-  </div>
-  <div class="item">
-    <img src="https://picsum.photos/190/190?14" />
-    <span class="caption">This is an image caption for image 14</span>
-  </div>
-    <div class="item">
-      <img src="https://picsum.photos/190/190?15" />
-      <span class="caption">This is an image caption for image 15</span>
-    </div> -->
-
-
-</div>
-</div>
-
-
-        <div class="footer">
-<a href="https://wilder.zone">WILDERZONE</a>      
-</div> 
+    <div class="footer">
+      <a href="https://wilder.zone">WILDERZONE</a>
+    </div>
   </body>
   <script type="module">
-
     const queryRedis = async (url) => {
       console.log("queryRedis");
       console.log(url);
@@ -78,97 +59,66 @@
         headers: { "Content-type": "application/json" },
       });
       // console.log(resp)
-      console.log(resp.json());
-      return resp.json();
+      const data = resp.json();
+      return data;
     };
 
-      queryRedis("/api");
-
-    const queryAPI = async (url) => {
-      console.log("queryAPI");
-      console.log(url);
-      const resp = await fetch(url, {
-        method: "GET",
-        mode: "cors",
-        // headers: { "Content-type": "application/json" },
-      });
-      return resp.json();
-    };
-// create a function to update the UI with the data from the API
+    // create a function to update the UI with the data from the API
     const updateUI = async (data) => {
-      console.log("updateUI");
-        console.log(data);
-      const app = document.getElementById("app");	
-      for (let d in data.data) {
+      console.log("updateUI", data.message.data.data);
+      const items = data.message.data.data;
+      console.log(items);
+      const app = document.getElementById("app");
+      for (let d in items) {
         if (d > 0) {
-         
-        
- 	//create an element for each image
-	const product = document.createElement("div");
-  product.className = "item";
-  
-  const img = document.createElement("img");
-  const name = document.createElement("span");
-  name.className = "caption";
+          //create an element for each image
+          const product = document.createElement("div");
+          product.className = "item";
 
-	//set the src attribute of the image to the url of the image			
-	img.src = data.data[d].images[0].src;
-  img.alt = data.data[d].title;
-  name.innerHTML = data.data[d].title;
- // img.className = "col square";
-	img.onclick = function (e) {
-		console.log("clicked", e);
-		window.location.href = "/checkout.html?data=" + data.data[d].id + 
-    + "&price=" + data.data[d].variants[0].price + "&image=" + data.data[d].images[0].src +
-     + "&description=" + data.data[d].description;	
-    };	
-	//append the image to the app div
-  
-  product.appendChild(img);
-  product.appendChild(name);
-  app.appendChild(product);
-  }
-  }}
+          const img = document.createElement("img");
+          const name = document.createElement("span");
+          name.className = "caption";
+
+          //set the src attribute of the image to the url of the image
+          img.src = items[d].images[0].src;
+          img.alt = items[d].title;
+          name.innerHTML = items[d].title;
+          // img.className = "col square";
+          img.onclick = function (e) {
+            console.log("clicked", e);
+            window.location.href =
+              "/checkout.html?data=" +
+              data.data[d].id +
+              +"&price=" +
+              data.data[d].variants[0].price +
+              "&image=" +
+              data.data[d].images[0].src +
+              +"&description=" +
+              data.data[d].description;
+          };
+          //append the image to the app div
+          product.appendChild(img);
+          product.appendChild(name);
+          app.appendChild(product);
+        }
+      }
+    };
 
     const handleEvent = async () => {
-      const results = await queryAPI(
-        "https://printify-service.wilderzone.workers.dev/"
-      );
-
+      const results = await queryRedis("/api");
+      console.log("handleEvent", results);
       updateUI(results);
     };
 
     handleEvent();
 
-// body.onclick = function (e) {
-//   if (right.style.display != "none") {
-//     right.style.display = "none";
-//   } else {
-//     right.style.display = "block";
-//   }
-// }    
-// right.onclick = function (e) {
-//   if (this.style.display != "none") {
-//     this.style.display = "none";
-//     app.style.display = "block";
-//   } else {
-//     this.style.display = "block";
-//     app.style.display = "none";
-//   }
-// }
-
-title.onclick = function (e) {
-  console.log("clicked", e);
-  if (left.style.display != "none") {
-    left.style.display = "none";
-  
-  } else {
-    left.style.display = "block";
-   
-  }
-}
-    
-
-
+    title.onclick = function (e) {
+      console.log("clicked", e);
+      if (left.style.display != "none") {
+        left.style.display = "none";
+      } else {
+        left.style.display = "block";
+      }
+    };
   </script>
 </html>

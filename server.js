@@ -39,9 +39,41 @@ redis.get("key", function (err, result) {
   }
 });
 
+// const loadProducts = async () => {
+
+//   //  console.log("products", results);
+//   const json = await redis.json_set(
+//     "JSONKEY",
+//     ".",
+//     { products: { stuff: "thing" } },
+//     "NX"
+//   );
+//   return json;
+// };
+
+// loadProducts();
+
+// console.log("products set", redis.json_get("JSONKEY"));
+
+const queryAPI = async (url) => {
+  console.log("queryAPI");
+  console.log(url);
+  const resp = await fetch(url, {
+    method: "GET",
+    mode: "cors",
+    // headers: { "Content-type": "application/json" },
+  });
+  return resp.json();
+};
+
+//test rejson
 const main = async () => {
+  const results = await queryAPI(
+    "https://printify-service.wilderzone.workers.dev/"
+  );
+
   // ReJSON Methods
-  const res = await redis.json_set("JSONKEY", ".", { foo: "bar" }, "NX");
+  const res = await redis.json_set("JSONKEY", ".", { data: results }, "XX");
   const res2 = await redis.json_get("JSONKEY");
 
   console.log(res); // OK
@@ -57,40 +89,10 @@ const main = async () => {
 
 main();
 
-app.get("/api", (req, res) => {
-  redis.get("products", function (err, result) {
-    if (err) {
-      console.log(err);
-    } else {
-      // console.log(result);
-      // res.json({ message: "Hello from server.js" });
-
-      res.json({ message: result.JSON });
-    }
-  });
+app.get("/api", async (req, res) => {
+  const res2 = await redis.json_get("JSONKEY");
+  res.json({ message: res2 });
 });
-
-const queryAPI = async (url) => {
-  console.log("queryAPI");
-  console.log(url);
-  const resp = await fetch(url, {
-    method: "GET",
-    mode: "cors",
-    // headers: { "Content-type": "application/json" },
-  });
-  return resp.json();
-};
-
-const loadProducts = async () => {
-  const results = await queryAPI(
-    "https://printify-service.wilderzone.workers.dev/"
-  );
-
-  // console.log("products", results);
-  redis.set("products", JSON.stringify(results));
-};
-
-loadProducts();
 
 const YOUR_DOMAIN = "http://localhost:80";
 
