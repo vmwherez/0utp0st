@@ -5,7 +5,7 @@ const stripe = require("stripe")(
 const express = require("express");
 const app = express();
 app.use(express.static("public"));
-import Redis from "ioredis";
+const Redis = require("ioredis");
 
 // Connect to your internal Redis instance using the REDIS_URL environment variable
 // The REDIS_URL is set to the internal Redis URL e.g. redis://red-343245ndffg023:6379
