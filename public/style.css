@@ -6,14 +6,16 @@
 
 
 body {
-  font: 1em monospace;
-  background-color: #fcfcfc;
+  font: 1.7em monospace;
+  font-variant-caps: all-petite-caps;
+  background-color: #1c1c1c;
+  color:#ffffff;
   justify-content: center;
   align-items: center;
 }
 
 .container {
-  max-width: 600px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 4em;
 }
@@ -51,7 +53,7 @@ display: none;
   font: 1em monospace;
   z-index: 1000;
   width: 100%;
-  color: #1c1c1c;
+  color: #f1f1fc;
   padding: 1em;
 }
 
@@ -182,17 +184,26 @@ h5 {
 }
 button {
   align-items: center;
-  min-width: 120px;
+  min-width: 220px;
+  min-height: 75px;
   margin: .5em auto;
-  font: 1em monospace;
+  font: 1em sans-serif;
+  font-variant-caps: all-petite-caps;
   height: 36px;
   background: black;
   color: white;
-  font-size: 14px;
+  font-size: 24px;
+  border-radius: .2em;
   border: 0;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
+}
+
+
+.footer-logo {
+ width: 30px;
+ margin-top: 3px;
 }
 
 
@@ -208,11 +219,12 @@ form {margin: 0 auto;}
 .myGallery {
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
 .myGallery img {
   width: 100%;
+
 }
 
 /*
@@ -227,6 +239,7 @@ form {margin: 0 auto;}
 
 .myGallery .item img {
   vertical-align: middle;
+  
 }
 
 .myGallery .caption {

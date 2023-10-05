@@ -6,10 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>WILDERZONE - 0utp0st</title>
     <link rel="stylesheet" href="style.css" />
+    <script>
+      const handleClick = (e) => {
+        console.log("clicked", e.getAttribute("src"));
+        // const product = data.message.data.data[d];
+        window.location.href =
+          "/checkout.html?data=" +
+          1 +
+          +"&price=" +
+          1 +
+          "&image=" +
+          e.getAttribute("src");
+        // + +"&description=" +
+        // "VIP package";
+      };
+    </script>
   </head>
   <body>
     <div class="header">
-      <h1 id="title">0UTP0ST</h1>
+      <h1 id="title">-</h1>
     </div>
 
     <div id="left" class="myGallery">
@@ -25,6 +40,10 @@
     <div class="container">
       <div id="app" class="myGallery">
         <div class="item">
+          <h2>---</h2>
+          <p>- - - - - - -</p>
+        </div>
+        <div class="item">
           <h2>the world you remember</h2>
           <p>doesn't exist anymore</p>
         </div>
@@ -39,13 +58,20 @@
         </div>
         <div class="item">
           <img
+            onclick="handleClick(this)"
             src="https://t4.ftcdn.net/jpg/01/85/24/45/360_F_185244514_mW46R8doAxChavmI8OgBsBajK4dbxUyZ.jpg"
           />
+          <p>the world you remember</p>
+          <span class="caption">YEAR MEMBERSHIP</span>
         </div>
       </div>
     </div>
 
     <div class="footer">
+      <img
+        class="footer-logo"
+        src="https://wilder.zone/wilderzone_logo_transparent.png"
+      />
       <a href="https://wilder.zone">WILDERZONE</a>
     </div>
   </body>
@@ -70,7 +96,7 @@
       console.log(items);
       const app = document.getElementById("app");
       for (let d in items) {
-        if (d > 0) {
+        if (d > 1) {
           //create an element for each image
           const product = document.createElement("div");
           product.className = "item";
@@ -86,15 +112,16 @@
           // img.className = "col square";
           img.onclick = function (e) {
             console.log("clicked", e);
+            const product = data.message.data.data[d];
             window.location.href =
               "/checkout.html?data=" +
-              data.data[d].id +
+              product.id +
               +"&price=" +
-              data.data[d].variants[0].price +
+              product.variants[0].price +
               "&image=" +
-              data.data[d].images[0].src +
+              product.images[0].src +
               +"&description=" +
-              data.data[d].description;
+              product.description;
           };
           //append the image to the app div
           product.appendChild(img);

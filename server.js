@@ -7,26 +7,31 @@ const app = express();
 app.use(express.static("public"));
 const Redis = require("ioredis-rejson");
 
-const redis = new Redis(process.env.REDIS_URL);
+const redis = new Redis("0.0.0.0:6379");
 
-// const om = require("redis-om");
+const om = require("redis-om");
 
 // /* pulls the Redis URL from .env */
 // const url = process.env.REDIS_URL;
+const redis_url = "redis://0.0.0.0:6379";
+const url = redis_url
 
-// /* create and open the Redis OM Client */
-// const client = async () => {
-//   await new om.Client().open(url);
-// };
 
-// client().then((client) => {});
+/* create and open the Redis OM Client */
+ const client = async () => {
+   await new om.Client().open(url);
+ };
+
+ client().then((client) => {});
 
 // Connect to your internal Redis instance using the REDIS_URL environment variable
 // The REDIS_URL is set to the internal Redis URL e.g. redis://red-343245ndffg023:6379
 // const redis = new Redis(process.env.REDIS_URL);
 
 // Set and retrieve some values
+
 redis.set("key", "ioredis");
+
 
 redis.get("key", function (err, result) {
   if (err) {
@@ -36,21 +41,23 @@ redis.get("key", function (err, result) {
   }
 });
 
-// const loadProducts = async () => {
 
-//   //  console.log("products", results);
-//   const json = await redis.json_set(
-//     "JSONKEY",
-//     ".",
-//     { products: { stuff: "thing" } },
-//     "NX"
-//   );
-//   return json;
-// };
 
-// loadProducts();
+const loadProducts = async () => {
 
-// console.log("products set", redis.json_get("JSONKEY"));
+   //  console.log("products", results);
+   const json = await redis.json_set(
+     "JSONKEY",
+     ".",
+     { products: { stuff: "thing" } },
+     "NX"
+   );
+   return json;
+ };
+
+ loadProducts();
+
+ console.log("products set", redis.json_get("JSONKEY"));
 
 const queryAPI = async (url) => {
   console.log("queryAPI");
@@ -58,7 +65,7 @@ const queryAPI = async (url) => {
   const resp = await fetch(url, {
     method: "GET",
     mode: "cors",
-    // headers: { "Content-type": "application/json" },
+    headers: { "Content-type": "application/json" },
   });
   return resp.json();
 };
@@ -71,14 +78,14 @@ const main = async () => {
 
   // ReJSON Methods
   const res = await redis.json_set("JSONKEY", ".", { data: results }, "XX");
-  const res2 = await redis.json_get("JSONKEY");
+   const res2 = await redis.json_get("JSONKEY");
 
   console.log(res); // OK
   console.log(res2); // { foo: "bar"}
 
   // IORedis Methods
-  const res3 = await redis.set("KEY", "VALUE");
-  const res4 = await redis.get("KEY");
+   const res3 = await redis.set("KEY", "VALUE");
+   const res4 = await redis.get("KEY");
 
   console.log(res3); // OK
   console.log(res4); // "VALUE"
@@ -86,10 +93,13 @@ const main = async () => {
 
 main();
 
+
 app.get("/api", async (req, res) => {
   const res2 = await redis.json_get("JSONKEY");
   res.json({ message: res2 });
 });
+
+
 
 const YOUR_DOMAIN = "http://localhost:80";
 
